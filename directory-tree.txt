@@ -1,0 +1,28 @@
+https://github.com/AlexJ-StL/NokSpeak.git
+
+nokspeak/
+├── build_docs.py # Generates an HTML and a TXT file from MD files in `docs/`
+├── directory-tree.txt  # Map of the repo
+├── docs/
+│   ├── academic-paper.html
+│   ├── academic-paper.md  # The NokSpeak v2.1 formal technical report
+│   ├── academic-paper.txt
+│   ├── reference-lexicon.html
+│   ├── reference-lexicon.md  # Clean markdown table of the v2.1 syntax
+│   └── reference-lexicon.txt
+├── MCP-server/
+│   ├── package.json  # Bun runtime configuration
+│   ├── src/
+│   │   └── index.ts  # MCP server handling NokSpeak validation/parsing
+│   └── tsconfig.json  # Strict TypeScript configuration
+├── pyproject.toml # Settings for the root folder, specifically `build_docs.py`
+├── README.md  # Main repo landing page and usage matrix
+├── templates/
+│   ├── integrations/
+│   │   ├── nok_skill.py  # The concrete Python execution layer
+│   │   ├── SKILL.md  # Unified v2.1 skills document for local runners
+│   │   └── tool-definition.json  # Traditional JSON-schema tool manifest
+│   └── system-prompts/
+│       ├── base-agent.txt  # System prompt template to inject v2.1 rules
+│       └── conductor.txt  # Prompt for orchestrator/swarm conductor nodes
+└── uv.lock

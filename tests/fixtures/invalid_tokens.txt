@@ -1,0 +1,10 @@
+# Invalid NokSpeak v2.1 tokens for testing
+invalid++:mi
+seshXX:mi
+savref++:xx
+notatoken
+
+sesh+++:mi
+savref**:mi
+unknown++:mi
+savref++:invalid

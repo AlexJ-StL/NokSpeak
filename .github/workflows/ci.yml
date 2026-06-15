@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Cache uv
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: uv-${{ runner.os }}-${{ hashFiles('uv.lock') }}
+
+      - name: Install Python dependencies
+        run: uv sync --group dev
+
+      - name: Run Ruff lint
+        run: uv run ruff check .
+
+      - name: Run Ruff format check
+        run: uv run ruff format --check .
+
+      - name: Run Python tests
+        run: uv run pytest tests/ -v --cov=templates --cov=build_docs.py --cov-fail-under=80
+
+      - name: Install TypeScript dependencies
+        working-directory: ./MCP-server
+        run: bun install
+
+      - name: TypeScript type check
+        working-directory: ./MCP-server
+        run: bunx tsc --noEmit
+
+      - name: Build docs
+        run: uv run python build_docs.py
+
+      - name: Verify docs rebuilt
+        run: |
+          git diff --exit-code docs/ || (echo "Docs out of sync! Run 'uv run python build_docs.py'" && exit 1)
+
+  release:
+    needs: lint-and-test
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Publish to PyPI
+        env:
+          PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          uv build
+          uv publish --token $PYPI_API_TOKEN
+
+      - name: Publish to npm
+        working-directory: ./MCP-server
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm publish --access public

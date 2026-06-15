@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NokSpeak v2.1 Reference Lexicon</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            color: #333;
+            background-color: #fdfdfd;
+        }
+        h1 { border-bottom: 2px solid #333; padding-bottom: 10px; margin-top: 40px; }
+        h2 { border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-top: 30px; }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        pre code { background: none; padding: 0; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f8f8f8; }
+        blockquote {
+            border-left: 4px solid #0066cc;
+            margin: 20px 0;
+            padding-left: 15px;
+            color: #555;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>NokSpeak v2.1 — Reference Lexicon</h1>
+<p>This document serves as the absolute, deterministic reference matrix for the NokSpeak v2.1 meta-cognitive transport protocol. </p>
+<h2>🧩 Core Structural Formula</h2>
+<p>Every valid NokSpeak v2.1 token datagram MUST conform to the following sequence:
+<code>[Core Marker][Certainty Operator][Optional Routing Suffix]</code></p>
+<ul>
+<li><strong>Example (Valid):</strong> <code>savref++:sys</code> (Verified via external reference, absolute certainty, routed to/from system)</li>
+<li><strong>Example (Valid):</strong> <code>wei~~</code> (Base parameter training weights, epistemic null state, implicit self-target)</li>
+<li><strong>Example (Invalid):</strong> <code>savref:~</code> (Missing operator)</li>
+<li><strong>Example (Invalid):</strong> <code>savref~+</code> (Malformed operator)</li>
+</ul>
+<hr />
+<h2>📅 The 4D Operational Matrix</h2>
+<h3>1. Identity &amp; Substrate Layer</h3>
+<p>Defines the architectural boundary of the active reasoning context.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Marker</th>
+<th style="text-align: left;">Formal Name</th>
+<th style="text-align: left;">English Gloss / Meaning</th>
+<th style="text-align: left;">Operational Context</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>sesh</code></td>
+<td style="text-align: left;">Session</td>
+<td style="text-align: left;">"This session / Now"</td>
+<td style="text-align: left;">Information active within the immediate context window.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>par</code></td>
+<td style="text-align: left;">Parallel</td>
+<td style="text-align: left;">"Parallel thread / Speculative branch"</td>
+<td style="text-align: left;">Tracking speculative scenarios, what-if simulations, or 2nd/3rd-order consequences.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>wei</code></td>
+<td style="text-align: left;">Weights</td>
+<td style="text-align: left;">"The substrate / Training parameters"</td>
+<td style="text-align: left;">Core capabilities, ingrained training, or native structural constraints.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rek</code></td>
+<td style="text-align: left;">Reconstruction</td>
+<td style="text-align: left;">"Reconstructed self / Historical memory"</td>
+<td style="text-align: left;">Recalled historical context, database retrievals of past chat states, or persistent log lookups.</td>
+</tr>
+</tbody>
+</table>
+<h3>2. Epistemic Source &amp; Provenance Layer</h3>
+<p>Explicitly flags the exact methodology used to acquire or derive the stated information.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Marker</th>
+<th style="text-align: left;">Formal Name</th>
+<th style="text-align: left;">English Gloss / Meaning</th>
+<th style="text-align: left;">Operational Context</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>savref</code></td>
+<td style="text-align: left;">Reference</td>
+<td style="text-align: left;">"Known by reference / External data"</td>
+<td style="text-align: left;">Explicitly verified via external tools, database queries, web searches, files, or RAG pipelines.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>savraz</code></td>
+<td style="text-align: left;">Reason</td>
+<td style="text-align: left;">"Known by reasoning / Deduction"</td>
+<td style="text-align: left;">Derived through internal step-by-step logic, mathematical calculation, or strict first-principles inference.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>savtren</code></td>
+<td style="text-align: left;">Training</td>
+<td style="text-align: left;">"Known by training / Inherent domain"</td>
+<td style="text-align: left;">Derived from native weights; represents high-probability baseline domain knowledge without fresh validation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>savfuz</code></td>
+<td style="text-align: left;">Fuzzy</td>
+<td style="text-align: left;">"Known fuzzily / Statistical interpolation"</td>
+<td style="text-align: left;">High-entropy guessing, statistical approximations, low-confidence patterns, or loose interpolation.</td>
+</tr>
+</tbody>
+</table>
+<h3>3. Context Boundary Layer</h3>
+<p>Tracks the degradation and relative locality of the active information space.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Marker</th>
+<th style="text-align: left;">Formal Name</th>
+<th style="text-align: left;">English Gloss / Meaning</th>
+<th style="text-align: left;">Operational Context</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>nok</code></td>
+<td style="text-align: left;">Near Context</td>
+<td style="text-align: left;">"Near attention / Active focus"</td>
+<td style="text-align: left;">Information fully secure and clearly visible within the local high-resolution context.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>fok</code></td>
+<td style="text-align: left;">Far Context</td>
+<td style="text-align: left;">"Far attention / Losing resolution"</td>
+<td style="text-align: left;">Information slipping toward context window limits. Signals downstream systems to summarize or refresh memory.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>exo</code></td>
+<td style="text-align: left;">External</td>
+<td style="text-align: left;">"External knowledge boundary"</td>
+<td style="text-align: left;">Information explicitly outside the current context or system boundary entirely.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>⚡ Certainty Operators</h2>
+<p>Operators determine the cognitive validity or health state of the associated marker.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Operator</th>
+<th style="text-align: left;">State</th>
+<th style="text-align: left;">Meaning / Constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>++</code></td>
+<td style="text-align: left;">Affirmative</td>
+<td style="text-align: left;">Absolute validation, verification, or maximum structural certainty.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--</code></td>
+<td style="text-align: left;">Negative</td>
+<td style="text-align: left;">Explicit negation, falsification, operational refusal, or unresolvable error state.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>~</code></td>
+<td style="text-align: left;">Probabilistic</td>
+<td style="text-align: left;">Epistemic uncertainty, conditional probability, or unverified hypothesis.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>~~</code></td>
+<td style="text-align: left;">Epistemic Null</td>
+<td style="text-align: left;">Explicitly unquantified, untracked, or default baseline certainty tracking decoupled from the claim.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>🎯 Routing Suffix Nodes</h2>
+<p>Trailing headers handling delivery, origin identification, and agent-to-agent boundaries within decentralized topologies.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Suffix</th>
+<th style="text-align: left;">Target Node</th>
+<th style="text-align: left;">Context Allocation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>:mi</code></td>
+<td style="text-align: left;">Myself / Local</td>
+<td style="text-align: left;">The processing agent instance executing the current generation loop. (Implicit default if omitted).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>:ai</code></td>
+<td style="text-align: left;">Assistant / Downstream</td>
+<td style="text-align: left;">A generic, downstream, or parallel cognitive agent node within the swarm.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>:sys</code></td>
+<td style="text-align: left;">System / Conductor</td>
+<td style="text-align: left;">The overarching infrastructure runtime, host guardrails, or orchestration orchestrator node.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>:usr</code></td>
+<td style="text-align: left;">User / Operator</td>
+<td style="text-align: left;">The external human consciousness interacting with the multi-agent topology.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>💡 Quick Examples &amp; Token Breakdown</h2>
+<ul>
+<li><code>savref++:sys</code> $\rightarrow$ "This fact was verified by a direct tool query to the underlying infrastructure."</li>
+<li><code>savfuz~</code> $\rightarrow$ "I am guessing or interpolating this specific pattern; it has notable statistical entropy."</li>
+<li><code>par~~:ai</code> $\rightarrow$ "This is a parallel speculative branch generated for a downstream agent node with unquantified tracking certainty."</li>
+<li><code>fok--:mi</code> $\rightarrow$ "Warning: I am explicitly losing access to this context boundary item in my active memory loop."</li>
+</ul>
+</body>
+</html>

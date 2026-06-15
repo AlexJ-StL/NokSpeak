@@ -1,0 +1,13 @@
+# Valid NokSpeak v2.1 tokens for testing
+sesh++:mi
+par--:ai
+wei~:sys
+rek~~:usr
+savref++:mi
+savraz--:ai
+savtren~:sys
+savfuz~~:usr
+nok++:mi
+fok--:ai
+exo~:sys
+savref++

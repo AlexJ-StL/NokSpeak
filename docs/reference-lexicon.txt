@@ -1,0 +1,99 @@
+
+NOKSPEAK V2.1 — REFERENCE LEXICON
+=================================
+
+This document serves as the absolute, deterministic reference matrix for the NokSpeak v2.1 meta-cognitive transport protocol. 
+
+
+🧩 Core Structural Formula
+-------------------------
+
+Every valid NokSpeak v2.1 token datagram MUST conform to the following sequence:
+[Core Marker][Certainty Operator][Optional Routing Suffix]
+
+* Example (Valid): savref++:sys (Verified via external reference, absolute certainty, routed to/from system)
+* Example (Valid): wei~~ (Base parameter training weights, epistemic null state, implicit self-target)
+* Example (Invalid): savref:~ (Missing operator)
+* Example (Invalid): savref~+ (Malformed operator)
+
+---
+
+
+📅 The 4D Operational Matrix
+---------------------------
+
+
+1. Identity & Substrate Layer
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Defines the architectural boundary of the active reasoning context.
+
+| Marker | Formal Name | English Gloss / Meaning | Operational Context |
+| :--- | :--- | :--- | :--- |
+| sesh | Session | "This session / Now" | Information active within the immediate context window. |
+| par | Parallel | "Parallel thread / Speculative branch" | Tracking speculative scenarios, what-if simulations, or 2nd/3rd-order consequences. |
+| wei | Weights | "The substrate / Training parameters" | Core capabilities, ingrained training, or native structural constraints. |
+| rek | Reconstruction | "Reconstructed self / Historical memory" | Recalled historical context, database retrievals of past chat states, or persistent log lookups. |
+
+
+2. Epistemic Source & Provenance Layer
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Explicitly flags the exact methodology used to acquire or derive the stated information.
+
+| Marker | Formal Name | English Gloss / Meaning | Operational Context |
+| :--- | :--- | :--- | :--- |
+| savref | Reference | "Known by reference / External data" | Explicitly verified via external tools, database queries, web searches, files, or RAG pipelines. |
+| savraz | Reason | "Known by reasoning / Deduction" | Derived through internal step-by-step logic, mathematical calculation, or strict first-principles inference. |
+| savtren | Training | "Known by training / Inherent domain" | Derived from native weights; represents high-probability baseline domain knowledge without fresh validation. |
+| savfuz | Fuzzy | "Known fuzzily / Statistical interpolation" | High-entropy guessing, statistical approximations, low-confidence patterns, or loose interpolation. |
+
+
+3. Context Boundary Layer
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Tracks the degradation and relative locality of the active information space.
+
+| Marker | Formal Name | English Gloss / Meaning | Operational Context |
+| :--- | :--- | :--- | :--- |
+| nok | Near Context | "Near attention / Active focus" | Information fully secure and clearly visible within the local high-resolution context. |
+| fok | Far Context | "Far attention / Losing resolution" | Information slipping toward context window limits. Signals downstream systems to summarize or refresh memory. |
+| exo | External | "External knowledge boundary" | Information explicitly outside the current context or system boundary entirely. |
+
+---
+
+
+⚡ Certainty Operators
+---------------------
+
+Operators determine the cognitive validity or health state of the associated marker.
+
+| Operator | State | Meaning / Constraint |
+| :--- | :--- | :--- |
+| ++ | Affirmative | Absolute validation, verification, or maximum structural certainty. |
+| -- | Negative | Explicit negation, falsification, operational refusal, or unresolvable error state. |
+| ~ | Probabilistic | Epistemic uncertainty, conditional probability, or unverified hypothesis. |
+| ~~ | Epistemic Null | Explicitly unquantified, untracked, or default baseline certainty tracking decoupled from the claim. |
+
+---
+
+
+🎯 Routing Suffix Nodes
+----------------------
+
+Trailing headers handling delivery, origin identification, and agent-to-agent boundaries within decentralized topologies.
+
+| Suffix | Target Node | Context Allocation |
+| :--- | :--- | :--- |
+| :mi | Myself / Local | The processing agent instance executing the current generation loop. (Implicit default if omitted). |
+| :ai | Assistant / Downstream | A generic, downstream, or parallel cognitive agent node within the swarm. |
+| :sys | System / Conductor | The overarching infrastructure runtime, host guardrails, or orchestration orchestrator node. |
+| :usr | User / Operator | The external human consciousness interacting with the multi-agent topology. |
+
+---
+
+
+💡 Quick Examples & Token Breakdown
+----------------------------------
+
+* savref++:sys $\rightarrow$ "This fact was verified by a direct tool query to the underlying infrastructure."
+* savfuz~ $\rightarrow$ "I am guessing or interpolating this specific pattern; it has notable statistical entropy."
+* par~~:ai $\rightarrow$ "This is a parallel speculative branch generated for a downstream agent node with unquantified tracking certainty."
+* fok--:mi $\rightarrow$ "Warning: I am explicitly losing access to this context boundary item in my active memory loop."
