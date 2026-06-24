@@ -9,9 +9,10 @@ This document serves as the absolute, deterministic reference matrix for the Nok
 -------------------------
 
 Every valid NokSpeak v2.1 token datagram MUST conform to the following sequence:
-[Core Marker][Certainty Operator][Optional Routing Suffix]
+[Optional Version Prefix][Core Marker][Certainty Operator][Optional Routing Suffix]
 
 * Example (Valid): savref++:sys (Verified via external reference, absolute certainty, routed to/from system)
+* Example (Valid): nok2.1:savref++:sys (Same token with explicit version prefix)
 * Example (Valid): wei~~ (Base parameter training weights, epistemic null state, implicit self-target)
 * Example (Invalid): savref:~ (Missing operator)
 * Example (Invalid): savref~+ (Malformed operator)
@@ -43,7 +44,7 @@ Explicitly flags the exact methodology used to acquire or derive the stated info
 | :--- | :--- | :--- | :--- |
 | savref | Reference | "Known by reference / External data" | Explicitly verified via external tools, database queries, web searches, files, or RAG pipelines. |
 | savraz | Reason | "Known by reasoning / Deduction" | Derived through internal step-by-step logic, mathematical calculation, or strict first-principles inference. |
-| savtren | Training | "Known by training / Inherent domain" | Derived from native weights; represents high-probability baseline domain knowledge without fresh validation. |
+| savtren | Training | "Known by training / Inherent domain" | Derived from native weights; represents high-probability baseline domain knowledge without fresh validation. Subtypes: savtren++ — well-established, widely corroborated domain fact (e.g. scientific constants, historical dates). savtren~ — plausible pattern match specific to this query, unverified in this context (treat as inference, not fact). |
 | savfuz | Fuzzy | "Known fuzzily / Statistical interpolation" | High-entropy guessing, statistical approximations, low-confidence patterns, or loose interpolation. |
 
 
@@ -97,3 +98,49 @@ Trailing headers handling delivery, origin identification, and agent-to-agent bo
 * savfuz~ $\rightarrow$ "I am guessing or interpolating this specific pattern; it has notable statistical entropy."
 * par~~:ai $\rightarrow$ "This is a parallel speculative branch generated for a downstream agent node with unquantified tracking certainty."
 * fok--:mi $\rightarrow$ "Warning: I am explicitly losing access to this context boundary item in my active memory loop."
+
+---
+
+
+📐 Certainty Calibration Guide
+-----------------------------
+
+For cross-model consistency in multi-agent deployments, use this shared calibration
+reference when emitting certainty operators. Without calibration, ++ from Model A
+may not mean the same thing as ++ from Model B.
+
+| Operator | Confidence Range | When to Use |
+| :--- | :--- | :--- |
+| ++ | 95-100% | Verified by external tool, deterministic computation, or near-certain domain fact. |
+| ~ | 60-90% | Strong logical inference, corroborated pattern, or high-probability prediction with minor uncertainty. |
+| ~~ | 0-60% | Genuine unknown, best-effort estimate, or untracked state. |
+| -- | N/A | Negation only — not a confidence level. Use for falsification, refusal, or error states. |
+
+Per-model tuning: Each model in a multi-agent system SHOULD maintain its own
+calibration table mapping internal confidence scores to these operators. The conductor
+can audit consistency by sampling known-verified claims and checking that they emit ++.
+
+---
+
+
+🔄 Version Negotiation Protocol
+------------------------------
+
+NokSpeak tokens MAY include a version prefix for cross-version compatibility:
+
+`
+Format: nok[version]:[Marker][Operator][Node]
+Example: nok2.1:savref++:sys
+`
+
+Rules:
+1. Tokens WITHOUT a version prefix are assumed to be v2.1 (current default).
+2. When receiving a token with an unknown version, the consumer SHOULD:
+   a. Strip the version prefix and attempt to parse the remaining token.
+   b. If the marker/operator is unrecognized, signal "NokSpeak version mismatch" to the sender.
+   c. Route to a validation tool for interpretation if ambiguity persists.
+3. When emitting tokens in a mixed-version environment, ALWAYS include the version prefix.
+4. The version prefix regex is: nok\d+\.\d+: (e.g., nok2.1:, nok3.0:).
+
+Backward compatibility: All parsers in this repository accept both prefixed and
+unprefixed tokens. Existing v2.1 tokens remain valid indefinitely.

@@ -23,8 +23,9 @@ const VALID_CONTEXTS = ["nok", "fok", "exo"];
 const VALID_OPERATORS = ["++", "--", "~", "~~"];
 const VALID_NODES = [":mi", ":ai", ":sys", ":usr"];
 
-// Strict Regular Expression matching the token sequence: Marker[Operator][Node Suffix]
-const NOK_REGEX = /^([a-z]{3,7})(\+\+|--|~~|~)(:[a-z]{2,3})?$/;
+// Strict Regular Expression matching the token sequence:
+// [Optional Version Prefix]Marker[Operator][Optional Node Suffix]
+const NOK_REGEX = /^(?:nok(\d+\.\d+):)?([a-z]{3,7})(\+\+|--|~~|~)(:[a-z]{2,3})?$/;
 
 /**
  * Validates and structurally breaks down an isolated token payload
@@ -34,10 +35,10 @@ function analyzeToken(token: string) {
   const match = cleanToken.match(NOK_REGEX);
 
   if (!match) {
-    return { isValid: false, error: "Token format mismatch. Must follow: Marker[Operator][Node]" };
+    return { isValid: false, error: "Token format mismatch. Must follow: [nokX.Y:]Marker[Operator][Node]" };
   }
 
-  const [_, baseMarker, operator, nodeSuffix] = match;
+  const [_, version, baseMarker, operator, nodeSuffix] = match;
 
   // Determine token category allocation
   let category = "unknown";
@@ -59,7 +60,8 @@ function analyzeToken(token: string) {
       marker: baseMarker,
       category: category,
       operator: operator,
-      node: nodeSuffix || ":mi" // Default local node context
+      node: nodeSuffix || ":mi", // Default local node context
+      version: version || "n/a"
     }
   };
 }
@@ -112,8 +114,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     if (name === "parse_text_blocks") {
       const { text } = z.object({ text: z.string() }).parse(args);
       
-      // Look for explicit code-blocked or inline space-delimited markers
-      const wordPattern = /`?([a-z]{3,7}(?:\+\+|--|~~|~)(?::[a-z]{2,3})?)`?/gi;
+      // Look for explicit code-blocked or inline space-delimited markers.
+      // Word-boundary anchoring prevents false positives inside URLs, identifiers,
+      // or other non-token text containing operator-like character sequences.
+      const wordPattern = /(?:^|[\s.,;:!?()\[\]"'])(`?)([a-z]{3,7}(?:\+\+|--|~~|~)(?::[a-z]{2,3})?)(`?)(?=$|[\s.,;:!?()\[\]"'])/gi;
       const discoveredMatches = text.match(wordPattern) || [];
       
       const extractions = discoveredMatches.map(match => {

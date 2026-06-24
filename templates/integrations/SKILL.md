@@ -23,8 +23,29 @@ print(result["clean_text"])   # "Inference complete. Target compound structure m
 print(result["extractions"]) # Contains deep dict analysis of the 'savtren++' token
 ```
 
+### 3. Version Prefix Support (v2.1)
+Tokens may include an optional version prefix for cross-version compatibility:
+
+```python
+# Both valid:
+parse_and_strip_text("Record updated. savref++:sys")
+parse_and_strip_text("nok2.1:Record updated. savref++:sys")
+```
+
+The parser returns a `version` field in the component analysis, defaulting to `"n/a"` for unprefixed tokens.
+
+### 4. Certainty Calibration
+The reference lexicon includes a calibration guide mapping operators to confidence ranges:
+- `++` → 95-100% (verified, deterministic)
+- `~` → 60-90% (strong inference)
+- `~~` → 0-60% (genuine unknown)
+- `--` → N/A (negation/refusal)
+
+Use this to maintain consistency across different models in a multi-agent system.
+
 ## 🎯 Strategic Multi-Agent Alignment
 When building local skills, configure your pipeline to intercept agent strings before they are sent to other nodes:
 
 1. **The Ingest Stage:** Extract and log all NokSpeak tokens to map epistemic health metrics (monitoring for `savfuz~` tracking risks or `fok--` window degradation alerts).
 2. **The Sanitize Stage:** If the final target consumer is a human operator (`:usr`), pass the string through `parse_and_strip_text` to remove technical tokens entirely, ensuring zero formatting friction for non-technical users.
+3. **The Audit Stage:** Use `savtren` subtypes to distinguish domain facts (`savtren++`) from unverified inferences (`savtren~`) — flag the latter for tool verification before propagating downstream.

@@ -28,8 +28,8 @@ VALID_CONTEXTS = {"nok", "fok", "exo"}
 VALID_OPERATORS = {"++", "--", "~", "~~"}
 VALID_NODES = {":mi", ":ai", ":sys", ":usr"}
 
-# Strict Regex: BaseMarker[Operator][Optional Node Suffix]
-NOK_REGEX = re.compile(r"^([a-z]{3,7})(\+\+|--|~~|~)(:[a-z]{2,3})?$", re.IGNORECASE)
+# Strict Regex: [Optional Version Prefix]BaseMarker[Operator][Optional Node Suffix]
+NOK_REGEX = re.compile(r"^(?:nok(\d+\.\d+):)?([a-z]{3,7})(\+\+|--|~~|~)(:[a-z]{2,3})?$", re.IGNORECASE)
 
 
 def analyze_token(token: str) -> TokenAnalysis:
@@ -40,11 +40,11 @@ def analyze_token(token: str) -> TokenAnalysis:
     if not match:
         return {
             "is_valid": False,
-            "error": "Token format mismatch. Must follow: Marker[Operator][Node]",
+            "error": "Token format mismatch. Must follow: [nokX.Y:]Marker[Operator][Node]",
             "component": None,
         }
 
-    base_marker, operator, node_suffix = match.groups()
+    version, base_marker, operator, node_suffix = match.groups()
     base_marker = base_marker.lower()
 
     # Determine structural token category allocation
@@ -78,6 +78,7 @@ def analyze_token(token: str) -> TokenAnalysis:
             "category": category,
             "operator": operator,
             "node": node_suffix.lower() if node_suffix else ":mi",
+            "version": version if version else "n/a",
         },
     }
 
@@ -87,9 +88,12 @@ def parse_and_strip_text(text: str) -> dict[str, str | list[ExtractionResult]]:
 
     and a list of found structural datagrams.
     """
-    # Matches words containing valid operators, accounting for optional backticks
+    # Matches tokens surrounded by whitespace, punctuation, or string boundaries.
+    # Word-boundary anchoring prevents false positives inside URLs, identifiers,
+    # or other non-token text containing operator-like character sequences.
     word_pattern = re.compile(
-        r"`?([a-z]{3,7}(?:\+\+|--|~~|~)(?::[a-z]{2,3})?)`?", re.IGNORECASE
+        r"(?:^|[\s.,;:!?()\[\]\"'])`?([a-z]{3,7}(?:\+\+|--|~~|~)(?::[a-z]{2,3})?)`?(?=$|[\s.,;:!?()\[\]\"'])",
+        re.IGNORECASE
     )
     matches = word_pattern.findall(text)
 

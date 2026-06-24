@@ -46,9 +46,10 @@
 <p>This document serves as the absolute, deterministic reference matrix for the NokSpeak v2.1 meta-cognitive transport protocol. </p>
 <h2>🧩 Core Structural Formula</h2>
 <p>Every valid NokSpeak v2.1 token datagram MUST conform to the following sequence:
-<code>[Core Marker][Certainty Operator][Optional Routing Suffix]</code></p>
+<code>[Optional Version Prefix][Core Marker][Certainty Operator][Optional Routing Suffix]</code></p>
 <ul>
 <li><strong>Example (Valid):</strong> <code>savref++:sys</code> (Verified via external reference, absolute certainty, routed to/from system)</li>
+<li><strong>Example (Valid):</strong> <code>nok2.1:savref++:sys</code> (Same token with explicit version prefix)</li>
 <li><strong>Example (Valid):</strong> <code>wei~~</code> (Base parameter training weights, epistemic null state, implicit self-target)</li>
 <li><strong>Example (Invalid):</strong> <code>savref:~</code> (Missing operator)</li>
 <li><strong>Example (Invalid):</strong> <code>savref~+</code> (Malformed operator)</li>
@@ -121,7 +122,7 @@
 <td style="text-align: left;"><code>savtren</code></td>
 <td style="text-align: left;">Training</td>
 <td style="text-align: left;">"Known by training / Inherent domain"</td>
-<td style="text-align: left;">Derived from native weights; represents high-probability baseline domain knowledge without fresh validation.</td>
+<td style="text-align: left;">Derived from native weights; represents high-probability baseline domain knowledge without fresh validation. <strong>Subtypes:</strong> <code>savtren++</code> — well-established, widely corroborated domain fact (e.g. scientific constants, historical dates). <code>savtren~</code> — plausible pattern match specific to this query, unverified in this context (treat as inference, not fact).</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>savfuz</code></td>
@@ -239,5 +240,61 @@
 <li><code>par~~:ai</code> $\rightarrow$ "This is a parallel speculative branch generated for a downstream agent node with unquantified tracking certainty."</li>
 <li><code>fok--:mi</code> $\rightarrow$ "Warning: I am explicitly losing access to this context boundary item in my active memory loop."</li>
 </ul>
+<hr />
+<h2>📐 Certainty Calibration Guide</h2>
+<p>For cross-model consistency in multi-agent deployments, use this shared calibration
+reference when emitting certainty operators. Without calibration, <code>++</code> from Model A
+may not mean the same thing as <code>++</code> from Model B.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Operator</th>
+<th style="text-align: left;">Confidence Range</th>
+<th style="text-align: left;">When to Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>++</code></td>
+<td style="text-align: left;">95-100%</td>
+<td style="text-align: left;">Verified by external tool, deterministic computation, or near-certain domain fact.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>~</code></td>
+<td style="text-align: left;">60-90%</td>
+<td style="text-align: left;">Strong logical inference, corroborated pattern, or high-probability prediction with minor uncertainty.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>~~</code></td>
+<td style="text-align: left;">0-60%</td>
+<td style="text-align: left;">Genuine unknown, best-effort estimate, or untracked state.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>--</code></td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">Negation only — not a confidence level. Use for falsification, refusal, or error states.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Per-model tuning:</strong> Each model in a multi-agent system SHOULD maintain its own
+calibration table mapping internal confidence scores to these operators. The conductor
+can audit consistency by sampling known-verified claims and checking that they emit <code>++</code>.</p>
+<hr />
+<h2>🔄 Version Negotiation Protocol</h2>
+<p>NokSpeak tokens MAY include a version prefix for cross-version compatibility:</p>
+<div class="codehilite"><pre><span></span><code><span class="nf">Format</span><span class="err">:</span><span class="w"> </span><span class="n">nok</span><span class="o">[</span><span class="n">version</span><span class="o">]</span><span class="err">:</span><span class="o">[</span><span class="n">Marker</span><span class="o">][</span><span class="n">Operator</span><span class="o">][</span><span class="n">Node</span><span class="o">]</span>
+<span class="nl">Example</span><span class="p">:</span><span class="w"> </span><span class="n">nok2</span><span class="mf">.1</span><span class="err">:</span><span class="n">savref</span><span class="o">++</span><span class="err">:</span><span class="n">sys</span>
+</code></pre></div>
+
+<p><strong>Rules:</strong>
+1. Tokens WITHOUT a version prefix are assumed to be v2.1 (current default).
+2. When receiving a token with an unknown version, the consumer SHOULD:
+   a. Strip the version prefix and attempt to parse the remaining token.
+   b. If the marker/operator is unrecognized, signal "NokSpeak version mismatch" to the sender.
+   c. Route to a validation tool for interpretation if ambiguity persists.
+3. When emitting tokens in a mixed-version environment, ALWAYS include the version prefix.
+4. The version prefix regex is: <code>nok\d+\.\d+:</code> (e.g., <code>nok2.1:</code>, <code>nok3.0:</code>).</p>
+<p><strong>Backward compatibility:</strong> All parsers in this repository accept both prefixed and
+unprefixed tokens. Existing v2.1 tokens remain valid indefinitely.</p>
 </body>
 </html>

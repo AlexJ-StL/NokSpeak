@@ -29,7 +29,11 @@ In complex Multi-Agent Systems, this lack of explicit metadata leads to:
 
 ## 🧩 The Four-Dimensional Syntax Matrix
 
-NokSpeak v2.1 formats structures as: `[Core Token][Certainty Operator][Context Suffix]`
+NokSpeak v2.1 formats structures as: `[Version Prefix][Core Token][Certainty Operator][Context Suffix]`
+
+### 0. Version Prefix (optional)
+* `nok2.1:` — Optional prefix for cross-version compatibility. When omitted, v2.1 is assumed.
+* Tokens without a version prefix remain valid indefinitely. See Version Negotiation Protocol in the reference lexicon.
 
 ### 1. Identity & Substrate
 * `sesh`: Current unique session context window.
