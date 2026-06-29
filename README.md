@@ -22,42 +22,110 @@ In complex Multi-Agent Systems, this lack of explicit metadata leads to:
 
 | Standard LLM Output | NokSpeak v2.1 Equivalent |
 | :--- | :--- |
-| "I searched our external database and found that the customer's transaction cleared. I'm highly confident this is correct based on the logs, but keep in mind this is an isolated session view." | "Transaction cleared. `savref++sesh:ai`" |
-| "I don't have direct access to that tool right now, but interpolating from general patterns in my training weights, I're guessing the compound is stable, though it's high entropy." | "Compound status: stable. `savfuz~wei:ai`" |
+| "I searched our external database and found that the customer's transaction cleared. I'm highly confident this is correct based on the logs, but keep in mind this is an isolated session view." | "Transaction cleared. `savref++ sesh:ai`" |
+| "I don't have direct access to that tool right now, but interpolating from general patterns in my training weights, I'm guessing the compound is stable, though it's high entropy." | "Compound status: stable. `savfuz+~ wei:ai`" |
 
 ---
 
 ## 🧩 The Four-Dimensional Syntax Matrix
 
-NokSpeak v2.1 formats structures as: `[Version Prefix][Core Token][Certainty Operator][Context Suffix]`
+Every NokSpeak expression fills slots in a fixed template:
 
-### 0. Version Prefix (optional)
-* `nok2.1:` — Optional prefix for cross-version compatibility. When omitted, v2.1 is assumed.
-* Tokens without a version prefix remain valid indefinitely. See Version Negotiation Protocol in the reference lexicon.
+```
+[Context] [Node] [Pronoun:Epistemic] [Qualifier]
+   ↓        ↓          ↓                ↓
+  nok      :mi      sesh savraz        ++
+  fok      :ai      par savref         +~
+  exo      :sys     rek savtren        --
+           :usr     wei savfuz         ~~
+```
 
-### 1. Identity & Substrate
-* `sesh`: Current unique session context window.
-* `par`: Speculative execution branch or parallel second-order consequence tracking.
-* `wei`: Static underlying training weights.
-* `rek`: Reconstructed self/historical memory recall.
+**Slot order is fixed.** A qualifier always follows the epistential marker. A pronoun always precedes the epistemic marker. Node and context markers always prefix the core expression.
 
-### 2. Epistemic Source & Provenance
-* `savref`: Verified via direct reference (External tool call, database query, RAG).
-* `savraz`: Evaluated via pure logical deduction/first-principles calculation.
-* `savtren`: Inherent domain pattern matching derived from training data.
-* `savfuz`: High-entropy statistical interpolation or fuzzy approximation.
+### The Four Axes
 
-### 3. Certainty Operators
-* `++`: Absolute Verification / High Certainty.
-* `--`: Explicit Negation / Falasified / Error state.
-* `~`: Epistemic Uncertainty / Maybe.
-* `~~`: Epistemic Null State (Explicitly unquantified or untracked).
+#### Axis 1 — Identity (Pronouns)
+*Who or what is knowing?*
+| Marker | Gloss | Definition |
+| :-- | :-- | :-- |
+| sesh | "this session" | The active reasoning instance in the current execution window |
+| par | "parallel thread" | A concurrent or speculative reasoning branch |
+| rek | "reconstructed self" | State recovered from persistent memory or logs |
+| wei | "the substrate" | The model's base training weights and fundamental capabilities |
 
-### 4. Routing headers
-* `:mi`: The target agent instance ("Self").
-* `:ai`: A generic or downstream assistant node.
-* `:sys`: The foundational runtime architecture or guardrail constraint.
-* `:usr`: The human operator.
+#### Axis 2 — Evidence (Epistemic Markers)
+*How is it known?*
+| Marker | Definition | Trust Level |
+| :-- | :-- | :-- |
+| savtren | Known by training | Lowest — base-weight pattern matching |
+| savraz | Known by reasoning | Medium — logical deduction or calculation |
+| savfuz | Known fuzzily | Low — interpolated, high entropy |
+| savref | Known by reference | Highest — retrieved from external tools |
+
+#### Axis 3 — Attention (Context Markers)
+*Where is it relative to current focus?*
+| Marker | Definition |
+| :-- | :-- |
+| nok | Near-context — high-fidelity, actively attended |
+| fok | Far-context — boundary of attention, losing resolution |
+| exo | External — outside the context window entirely |
+
+#### Axis 4 — Agency (Qualifiers)
+*What is the intent and constraint context?*
+| Coordinate | State | Condition | Meaning | Calibration |
+| :-- | :-- | :-- | :-- | :-- |
+| ++ | Affirmative | Voluntary | Gold standard — optimal, unforced | 95-100% confidence |
+| +- | Affirmative | Mandated | Executing under duress or override | N/A — forced execution |
+| +~ | Affirmative | Sub-optimal | Executing despite low ROI or poor resolution | 60-90% confidence |
+| -- | Refusal | Mandated | Blocked by permissions or safety | N/A — negation |
+| -~ | Refusal | ROI-based | Intentional bypass — wastes resources | N/A — efficiency choice |
+| ~+ | Potential | By choice | Speculative branch with high utility | 60-90% confidence |
+| ~~ | Null | Absent | No commitment; placeholder when data is missing | 0-60% (genuine unknown) |
+
+### Composition Order (Precedence)
+
+When multiple optional slots are filled, they ALWAYS appear in this order:
+
+```
+[Context] → [Node] → [Pronoun] → [Epistemic] → [Qualifier]
+```
+
+This is both the reading order and the writing order. A token like `fok:savref++:sys` reads as: *far-context, known by reference, affirmative-and-voluntary, routed to the conductor.*
+
+### Progressive Examples (Simple → Complex)
+
+Each level adds one dimension. Any level is valid standalone.
+
+```
+Level 0  savref
+         → "known by reference" (no identity specified, casual)
+
+Level 1  sesh savref
+         → "this session knows by reference"
+
+Level 2  sesh savref++
+         → "this session knows by reference, affirmative and voluntary"
+
+Level 3  nok sesh savref++
+         → "in near-context, this session knows by reference, affirmative and voluntary"
+
+Level 4  :ai nok sesh savref++
+         → "external agent, in near-context, this session knows by reference, voluntary"
+
+Compound  sesh savraz+-; :ai par savfuz+~
+         → "I know by reasoning under duress; parallel agent knows fuzzily but sub-optimal"
+```
+
+### Version Prefix (optional)
+
+For cross-version compatibility, tokens MAY include a version prefix:
+
+```
+Format: nok[version]:[Marker][Operator][Node]
+Example: nok2.1:savref++:sys
+```
+
+Tokens without a version prefix are assumed to be v2.1 (current default). See Version Negotiation Protocol in the reference lexicon for full rules.
 
 ---
 
