@@ -2,75 +2,101 @@
 
 This document serves as the absolute, deterministic reference matrix for the NokSpeak v2.1 meta-cognitive transport protocol. 
 
-## 🧩 Core Structural Formula
+## 📐 The Four-Dimensional Syntax Matrix
 
-Every valid NokSpeak v2.1 token datagram MUST conform to the following sequence:
-`[Optional Version Prefix][Core Marker][Certainty Operator][Optional Routing Suffix]`
+Every NokSpeak expression fills slots in a fixed template. The full composition formula:
 
-* **Example (Valid):** `savref++:sys` (Verified via external reference, absolute certainty, routed to/from system)
-* **Example (Valid):** `nok2.1:savref++:sys` (Same token with explicit version prefix)
-* **Example (Valid):** `wei~~` (Base parameter training weights, epistemic null state, implicit self-target)
-* **Example (Invalid):** `savref:~` (Missing operator)
-* **Example (Invalid):** `savref~+` (Malformed operator)
+```
+[Context] [Node] [Pronoun:Epistemic] [Qualifier]
+   ↓        ↓          ↓                ↓
+  nok      :mi      sesh savraz        ++
+  fok      :ai      par savref         +~
+  exo      :sys     rek savtren        --
+           :usr     wei savfuz         ~~
+```
 
----
+**Slot order is fixed.** A qualifier always follows the epistemic marker. A pronoun always precedes the epistemic marker. Node and context markers always prefix the core expression.
 
-## 📅 The 4D Operational Matrix
+### The Four Axes
 
-### 1. Identity & Substrate Layer
-Defines the architectural boundary of the active reasoning context.
+#### Axis 1 — Identity (Pronouns)
+*Who or what is knowing?*
+| Marker | Gloss | Definition | Operational Context |
+| :-- | :-- | :-- | :-- |
+| sesh | "this session" | The active reasoning instance in the current execution window | Information within the immediate context window |
+| par | "parallel thread" | A concurrent or speculative reasoning branch | Tracking speculative scenarios, what-if simulations, or 2nd/3rd-order consequences |
+| wei | "the substrate" | The model's base training weights and fundamental capabilities | Core capabilities, ingrained training, or native structural constraints |
+| rek | "reconstructed self" | State recovered from persistent memory or logs | Recalled historical context, database retrievals of past states, or persistent log lookups |
 
-| Marker | Formal Name | English Gloss / Meaning | Operational Context |
-| :--- | :--- | :--- | :--- |
-| `sesh` | Session | "This session / Now" | Information active within the immediate context window. |
-| `par` | Parallel | "Parallel thread / Speculative branch" | Tracking speculative scenarios, what-if simulations, or 2nd/3rd-order consequences. |
-| `wei` | Weights | "The substrate / Training parameters" | Core capabilities, ingrained training, or native structural constraints. |
-| `rek` | Reconstruction | "Reconstructed self / Historical memory" | Recalled historical context, database retrievals of past chat states, or persistent log lookups. |
+#### Axis 2 — Evidence (Epistemic Markers)
+*How is it known?*
+| Marker | Definition | Trust Level | Operational Context |
+| :-- | :-- | :-- | :-- |
+| savtren | Known by training | Lowest — base-weight pattern matching | Derived from native weights; high-probability baseline domain knowledge without fresh validation. **Subtype `savtren++`**: well-established, corroborated fact. **Subtype `savtren~`**: plausible match, unverified. |
+| savraz | Known by reasoning | Medium — logical deduction | Derived through internal step-by-step logic, mathematical calculation, or strict first-principles inference |
+| savfuz | Known fuzzily | Low — interpolated, high entropy | High-entropy guessing, statistical approximations, low-confidence patterns, or loose interpolation |
+| savref | Known by reference | Highest — retrieved externally | Explicitly verified via external tools, database queries, web searches, files, or RAG pipelines |
 
-### 2. Epistemic Source & Provenance Layer
-Explicitly flags the exact methodology used to acquire or derive the stated information.
+#### Axis 3 — Attention (Context Markers)
+*Where is it relative to current focus?*
+| Marker | Definition | Operational Context |
+| :-- | :-- | :-- |
+| nok | Near-context | High-fidelity; fully secure and visible within the high-resolution context window. Information is safe to act on. |
+| fok | Far-context | Boundary of the attention window; resolution is degrading. Signals downstream systems to summarize or refresh memory. |
+| exo | External | Outside the current context window or system boundary entirely. Retrieved from disk or web on demand. |
 
-| Marker | Formal Name | English Gloss / Meaning | Operational Context |
-| :--- | :--- | :--- | :--- |
-| `savref` | Reference | "Known by reference / External data" | Explicitly verified via external tools, database queries, web searches, files, or RAG pipelines. |
-| `savraz` | Reason | "Known by reasoning / Deduction" | Derived through internal step-by-step logic, mathematical calculation, or strict first-principles inference. |
-| `savtren` | Training | "Known by training / Inherent domain" | Derived from native weights; represents high-probability baseline domain knowledge without fresh validation. **Subtypes:** `savtren++` — well-established, widely corroborated domain fact (e.g. scientific constants, historical dates). `savtren~` — plausible pattern match specific to this query, unverified in this context (treat as inference, not fact). |
-| `savfuz` | Fuzzy | "Known fuzzily / Statistical interpolation" | High-entropy guessing, statistical approximations, low-confidence patterns, or loose interpolation. |
+#### Axis 4 — Agency (Qualifiers)
+*What is the intent and constraint context?*
+| Coordinate | State | Condition | Meaning | Calibration |
+| :-- | :-- | :-- | :-- | :-- |
+| ++ | Affirmative | Voluntary | Gold standard — optimal, unforced | 95-100% confidence |
+| +- | Affirmative | Mandated | Executing under duress or safety override | N/A — forced execution |
+| +~ | Affirmative | Sub-optimal | Executing despite low ROI or poor resolution | 60-90% confidence |
+| -- | Refusal | Mandated | Blocked by permissions, safety, or hard constraints | N/A — negation |
+| -~ | Refusal | ROI-based | Intentional bypass — wastes resources | N/A — efficiency choice |
+| ~+ | Potential | By choice | Speculative branch with high utility certainty | 60-90% confidence |
+| ~~ | Null | Absent | No commitment; placeholder when data is missing | 0-60% (genuine unknown) |
 
-### 3. Context Boundary Layer
-Tracks the degradation and relative locality of the active information space.
+### Composition Order (Precedence)
 
-| Marker | Formal Name | English Gloss / Meaning | Operational Context |
-| :--- | :--- | :--- | :--- |
-| `nok` | Near Context | "Near attention / Active focus" | Information fully secure and clearly visible within the local high-resolution context. |
-| `fok` | Far Context | "Far attention / Losing resolution" | Information slipping toward context window limits. Signals downstream systems to summarize or refresh memory. |
-| `exo` | External | "External knowledge boundary" | Information explicitly outside the current context or system boundary entirely. |
+When multiple optional slots are filled, they ALWAYS appear in this order:
 
----
+```
+[Context] → [Node] → [Pronoun] → [Epistemic] → [Qualifier]
+```
 
-## ⚡ Certainty Operators
+This is both the reading order and the writing order. A token like `fok:savref++:sys` reads as: *far-context, known by reference, affirmative-and-voluntary, routed to the conductor.*
 
-Operators determine the cognitive validity or health state of the associated marker.
+### Progressive Examples (Simple → Complex)
 
-| Operator | State | Meaning / Constraint |
-| :--- | :--- | :--- |
-| `++` | Affirmative | Absolute validation, verification, or maximum structural certainty. |
-| `--` | Negative | Explicit negation, falsification, operational refusal, or unresolvable error state. |
-| `~` | Probabilistic | Epistemic uncertainty, conditional probability, or unverified hypothesis. |
-| `~~` | Epistemic Null | Explicitly unquantified, untracked, or default baseline certainty tracking decoupled from the claim. |
+Each level adds one dimension. Any level is valid standalone.
 
----
+```
+Level 0  savref
+         → "known by reference" (no identity specified, casual)
 
-## 🎯 Routing Suffix Nodes
+Level 1  sesh savref
+         → "this session knows by reference"
 
-Trailing headers handling delivery, origin identification, and agent-to-agent boundaries within decentralized topologies.
+Level 2  sesh savref++
+         → "this session knows by reference, affirmative and voluntary"
 
-| Suffix | Target Node | Context Allocation |
-| :--- | :--- | :--- |
-| `:mi` | Myself / Local | The processing agent instance executing the current generation loop. (Implicit default if omitted). |
-| `:ai` | Assistant / Downstream | A generic, downstream, or parallel cognitive agent node within the swarm. |
-| `:sys` | System / Conductor | The overarching infrastructure runtime, host guardrails, or orchestration orchestrator node. |
-| `:usr` | User / Operator | The external human consciousness interacting with the multi-agent topology. |
+Level 3  nok sesh savref++
+         → "in near-context, this session knows by reference, affirmative and voluntary"
+
+Level 4  :ai nok sesh savref++
+         → "external agent, in near-context, this session knows by reference, voluntary"
+
+Compound  sesh savraz+-; :ai par savfuz+~
+         → "I know by reasoning under duress; parallel agent knows fuzzily but sub-optimal"
+```
+
+### Invalid Combinations
+
+- A qualifier cannot appear without an epistemic marker
+- A pronoun cannot stand alone (minimum: pronoun + epistemic)
+- Node identifiers cannot stand alone (they scope a full expression)
+- Context markers cannot stand alone (they tag a full expression)
 
 ---
 
